@@ -1,29 +1,26 @@
 From cantara/zulu9-minimal
 MAINTAINER stig@lau.no
 
-ENV sonicbin=install_sonic_2015_sp2_container_launcher.bin
-env instfolder=/root/sonicinstall
+ENV sonicbin=install_sonic_2015_sp2_container_launcher
+
+ENV instfolder=/jalla/sonicinstall
 
 #RUN \
 #	mkdir -p ${instfolder} && \
-#	curl https://s3.amazonaws.com/kompost/psonix/${sonicbin} --output /${instfolder}/${sonicbin} && \
-#	chmod +x ${instfolder}/${sonicBin}
+#	curl https://s3.amazonaws.com/kompost/psonix/${sonicbin}.bin --output /${instfolder}/${sonicbin}.sh && \
+#	chmod +x ${instfolder}/${sonicBin}.sh
 
+COPY ${sonicbin}.bin /${instfolder}/${sonicbin}.sh
 
-RUN curl https://s3.amazonaws.com/kompost/psonix/${sonicbin} --output /tmp/${sonicbin}
+RUN chmod +x ${instfolder}/${sonicbin}.sh
 
-RUN \
-	mkdir -p ${instfolder} && \
-	cp /tmp/${sonicBin} ${instfolder}/${sonicBin}
-	chmod +x ${instfolder}/${sonicBin}
-
-
-
-#COPY config file + license from outside the container 
 COPY installer.properties ${instfolder}/installer.properties
 
-#Install and set up sonic
-#RUN ${instfolder}/${sonicBin} -i Silent
+#RUN echo $(grep $(hostname) /etc/hosts | cut -f1) my.host.name >> /etc/hosts && install-software
+
+
+RUN ${instfolder}/${sonicbin}.sh -i Silent; exit 0
+
 
 
 #Commands:
