@@ -21,9 +21,3 @@ CMD ${instfolder}/${sonicbin}.sh -i Silent \
 	&& /home/sonic/Containers/Domain1.hostname/launchcontainer.sh "$1" 2>&1
 
 
-#Commands:
-# docker build -t sonic .
-# docker run -it sonic /bin/bash #/bin/bash is for for debugging 
-# docker exec -it [container-id] bash # debug after startup
-
-# docker run -i -t stiglau/psonic-remote # Running normally
