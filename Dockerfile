@@ -16,13 +16,14 @@ RUN chmod +x ${instfolder}/${sonicbin}.sh
 
 COPY installer.properties ${instfolder}/installer.properties
 
-#RUN echo $(grep $(hostname) /etc/hosts | cut -f1) my.host.name >> /etc/hosts && install-software
-
-
-RUN ${instfolder}/${sonicbin}.sh -i Silent; exit 0
-
+#Start up sonic
+CMD ${instfolder}/${sonicbin}.sh -i Silent \
+	&& /home/sonic/Containers/Domain1.hostname/launchcontainer.sh "$1" 2>&1
 
 
 #Commands:
 # docker build -t sonic .
 # docker run -it sonic /bin/bash #/bin/bash is for for debugging 
+# docker exec -it [container-id] bash # debug after startup
+
+# docker run -i -t stiglau/psonic-remote # Running normally
